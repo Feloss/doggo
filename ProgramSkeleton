@@ -1,0 +1,112 @@
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class ProgramSkeleton {
+    static Scanner input = new Scanner(System.in);
+    static int[] arr = new int[5];
+
+    public static void initialize() {
+        System.out.println("Input 1 to print array");
+        System.out.println("Input 2 to randomize array");
+        System.out.println("Input 3 to find the smallest element");
+        System.out.println("Input 4 to find a certain element");
+        System.out.println("Input 0 to exit program");
+    }
+
+    public static void runCommandLoop() {
+        boolean done;
+        do {
+            int command = readCommand();
+            done = handleCommand(command);
+        } while (!done);
+    }
+
+    public static int readCommand() {
+        return readInteger("Input command > ");
+    }
+
+    public static int readInteger(String prompt) {
+        System.out.print(prompt);
+        int command = input.nextInt();
+        input.nextLine();
+        return command;
+    }
+
+    public static boolean handleCommand(int command) {
+        switch (command) {
+            case 0:
+                return true;
+            case 1:
+                printArray();
+                break;
+            case 2:
+                randomizeArray();
+                break;
+            case 3:
+                System.out.println(findMin());
+                break;
+            case 4:
+                findNumber();
+                break;
+            default:
+                System.out.println("No such command");
+
+        }
+        return false;
+    }
+
+    public static void printArray() {
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void randomizeArray() {
+        Random rnd = new Random();
+        for(int i = 0; i < arr.length; i++) {
+            arr[i] = rnd.nextInt(11);
+        }
+    }
+
+    public static int findMin() {
+        int min = arr[0];
+
+        for(int number: arr) {
+            if(number<min) {
+                min = number;
+            }
+        }
+        return min;
+    }
+
+    public static void findNumber() {
+        int number = readInteger("What number would you like to find? > ");
+        int index = findIndex(number);
+        if(index != -1) {
+            System.out.println(String.format("%d is located at index %d", number, index));
+        }
+        else {
+            System.out.println("Error: number not found");
+        }
+    }
+
+    public static int findIndex(int number) {
+        for(int index =0; index<arr.length; index++) {
+            if(arr[index] == number) {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    public static void closeDown() {
+
+    }
+
+    public static void main(String[] args) {
+        initialize();
+        runCommandLoop();
+        closeDown();
+    }
+
+}
